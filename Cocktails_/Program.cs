@@ -218,7 +218,7 @@ namespace Cocktails
             Console.WriteLine(" 4. Highball");
             Console.WriteLine(" 5. Poco Grande");
             Console.WriteLine(" 6. Flute");
-            GlassType type = GetGlassType(Console.ReadKey().Key);
+            GlassType type = GetGlassType(int.Parse(Console.ReadLine()));
             cocktail.GlassType = type;
         }
 
@@ -234,10 +234,16 @@ namespace Cocktails
             try
             {
                 int number = int.Parse(Console.ReadLine());
+                if (number > 0 && number < cocktail.IngredientDescription.Count())
+                {
+                    Console.Write("New ingredient amount: ");
+                    string newValue = Console.ReadLine();
+                    cocktail.IngredientDescription[(number - 1)].Description = newValue;
+                    Console.WriteLine("Changed ingredient amount");
+                }
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
