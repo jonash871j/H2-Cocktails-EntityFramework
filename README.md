@@ -1,3 +1,3 @@
 # Package Manager Console
-EntityFrameworkCore\Add-Migration "InitialCreate"
-EntityFrameworkCore\Update-Database
+1. EntityFrameworkCore\Add-Migration "InitialCreate"
+2. EntityFrameworkCore\Update-Database
