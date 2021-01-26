@@ -18,10 +18,6 @@ namespace Cocktails
         static CocktailController coCon = new CocktailController();
         static IngredientController inCon = new IngredientController();
 
-        // * Package Manager Console
-        // EntityFrameworkCore\Add-Migration "InitialCreate"
-        // EntityFrameworkCore\Update-Database
-
         static void Main(string[] args)
         {
             if (coCon.GetAll().Count() == 0)
@@ -35,16 +31,6 @@ namespace Cocktails
             {
                 showMenu = MainMenu();
             }
-
-
-            //controller.CreateCocktail(new Cocktail { Name = "Dummy2", Glass = GlassType.Collins, Ingredients = new List<Ingredient>() { new LiquidIngredient { Name = "SomeLiquid2", MlAmount = 100 } } });
-
-
-            //foreach (var c in controller.GetAllCocktails())
-            //{
-            //    Console.WriteLine(c.Name);
-            //    Console.WriteLine(c.Glass);
-            //}
         }
 
         private static bool MainMenu()
@@ -179,8 +165,6 @@ namespace Cocktails
                 }
             }
         }
-
-
         private static void UpdateDrink()
         {
             Console.Clear();
@@ -218,7 +202,7 @@ namespace Cocktails
             Console.WriteLine(" 4. Highball");
             Console.WriteLine(" 5. Poco Grande");
             Console.WriteLine(" 6. Flute");
-            GlassType type = GetGlassType(Console.ReadKey().Key);
+            GlassType type = GetGlassType((int)Console.ReadKey().Key);
             cocktail.GlassType = type;
         }
 
