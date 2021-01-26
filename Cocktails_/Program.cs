@@ -105,48 +105,37 @@ namespace Cocktails
             ExitCurrentMenu();
         }
 
-        private static GlassType GetGlassType(ConsoleKey key)
+        private static GlassType GetGlassType(int value)
         {
-            switch (key)
-            {
-                case ConsoleKey.D1:
-                    return GlassType.OldFashioned;
-                case ConsoleKey.D2:
-                    return GlassType.Collins;
-                case ConsoleKey.D3:
-                    return GlassType.Martini;
-                case ConsoleKey.D4:
-                    return GlassType.Highball;
-                case ConsoleKey.D5:
-                    return GlassType.PocoGrande;
-                case ConsoleKey.D6:
-                    return GlassType.Flute;
-                default:
-                    return GlassType.None;
-            }
+            GlassType glassType = (GlassType)value;
+
+            if (!Enum.IsDefined(typeof(GlassType), glassType))
+                throw new Exception("Invalid glass");
+
+            return glassType;
         }
 
         private static void CreateDrink()
         {
             Cocktail cocktail = new Cocktail();
-
-      
-
             Console.Clear();
 
             try
             {
                 GetCocktailNameInput();
                 GetCocktailGlass();
+                GetIngredientDescriptions();
+
+                coCon.Create(cocktail);
             }
             catch(Exception ex)
             {
                 Console.WriteLine("Cocktail was not created: " + ex.Message);
             }
-
-
-            ExitCurrentMenu();
-
+            finally
+            {
+                ExitCurrentMenu();
+            }
             void GetCocktailNameInput()
             {
                 Console.Write("Name of drink: ");
@@ -163,15 +152,31 @@ namespace Cocktails
                     Console.WriteLine($" {i}. {glassTypes[i]}");
                 }
                 Console.WriteLine("\r\nGlass type:");
-
-                cocktail.GlassType = GetGlassType(Console.ReadKey().Key);
-
-                if (cocktail.GlassType == GlassType.None)
-                    throw new Exception("Invalid glass");
+                cocktail.GlassType = GetGlassType(int.Parse(Console.ReadLine()));
             }
             void GetIngredientDescriptions()
             {
+                List<Ingredient> ingredients = inCon.GetAll();
 
+                for (int i = 0; i < ingredients.Count; i++)
+                {
+                    Console.WriteLine($" {i}. {ingredients[i].Name} : {ingredients[i].IngredientType.ToString()}");
+                }
+                Console.WriteLine("\r\nIngredient:");
+                int choice = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("\r\nDescription:");
+                string decscription = Console.ReadLine();
+
+                cocktail.IngredientDescription.Add(new IngredientDescription(ingredients[choice].Name, decscription));
+
+                Console.WriteLine("Do you want more ingredients, type 'Y' ");
+                ConsoleKeyInfo key = Console.ReadKey();
+
+                if (key.Key == ConsoleKey.Y)
+                {
+                    GetIngredientDescriptions();
+                }
             }
         }
 
