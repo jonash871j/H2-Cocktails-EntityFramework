@@ -21,7 +21,7 @@ namespace Cocktails.Controllers
         /// <summary>
         /// Used to get all objects in table
         /// </summary>
-        public IEnumerable<T> GetAll();
+        public List<T> GetAll();
         /// <summary>
         /// Used to get specfic object
         /// </summary>
