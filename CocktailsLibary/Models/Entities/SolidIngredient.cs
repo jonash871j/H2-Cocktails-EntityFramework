@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CocktailsLib.Models
 {
-    class SolidIngredient
+    public class SolidIngredient
     {
         public string AmountDescription { get; set; }
     }
