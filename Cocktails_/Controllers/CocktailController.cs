@@ -20,6 +20,14 @@ namespace Cocktails.Controllers
                 context.SaveChanges();
             }
         }
+        public void Update(Cocktail cocktail)
+        {
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.Update(cocktail);
+                context.SaveChanges();
+            }
+        }
         public void Delete(string key)
         {
             using (CocktailDBContext context = new CocktailDBContext())
@@ -85,7 +93,6 @@ namespace Cocktails.Controllers
 
             return cocktails;
         }
-
         private Cocktail GetIngredientDescription(Cocktail cocktail)
         {
             cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
