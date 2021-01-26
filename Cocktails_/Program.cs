@@ -51,10 +51,10 @@ namespace Cocktails
         {
             Console.Clear();
             Console.WriteLine("Choose an option:");
-            Console.WriteLine(" 1. List with drinks");
-            Console.WriteLine(" 2. Create Drink");
-            Console.WriteLine(" 3. Delete Drink");
-            Console.WriteLine(" 4. Search for Drink");
+            Console.WriteLine(" 1. List with cocktails");
+            Console.WriteLine(" 2. Create cocktail");
+            Console.WriteLine(" 3. Delete cocktail");
+            Console.WriteLine(" 4. Search for cocktails");
             Console.WriteLine(" 5. Set default cocktails");
             Console.Write("\r\nSelect an option: ");
             switch (Console.ReadKey().Key)
@@ -82,7 +82,7 @@ namespace Cocktails
         private static void DrinkList()
         {
             Console.Clear();
-            Console.WriteLine("List with drinks:");
+            Console.WriteLine("List with cocktails:");
 
             foreach (Cocktail item in coCon.GetAll())
             {
@@ -176,15 +176,67 @@ namespace Cocktails
             }
         }
 
+
+        private static void UpdateDrink()
+        {
+            Console.Clear();
+            Console.Write("Write the cocktail name: ");
+            string cocktailName = Console.ReadLine();
+            Cocktail cocktail = coCon.Get(cocktailName);
+            if (cocktail != null)
+            {
+                Console.WriteLine("\r\nChoose to edit:");
+                Console.WriteLine(" 1. Name");
+                Console.WriteLine(" 2. Glass type");
+                Console.Write("\r\nYour choice: ");
+                ConsoleKey key = Console.ReadKey().Key;
+                if (key == ConsoleKey.D1)
+                {
+                    ChangeCocktailName(cocktail);
+                }
+                else if (key == ConsoleKey.D2)
+                {
+                    ChangeCocktailGlassType(cocktail);
+                }
+            
+            }
+            
+            ExitCurrentMenu();
+        }
+
+        private static void ChangeCocktailName(Cocktail cocktail)
+        {
+            Console.Write("\r\nNew name: ");
+            string newName = Console.ReadLine();
+            if (newName.Length > 0)
+            {
+                cocktail.Name = newName;
+                Console.WriteLine("Name changed!");
+            }
+        }
+
+        private static void ChangeCocktailGlassType(Cocktail cocktail)
+        {
+            Console.WriteLine("\r\nNew Glass type:");
+            Console.WriteLine(" 1. Old Fashioned");
+            Console.WriteLine(" 2. Collins");
+            Console.WriteLine(" 3. Martini");
+            Console.WriteLine(" 4. Highball");
+            Console.WriteLine(" 5. Poco Grande");
+            Console.WriteLine(" 6. Flute");
+            GlassType type = GetGlassType(Console.ReadKey().Key);
+            cocktail.GlassType = type;
+        }
+
         private static void DeleteDrink()
         {
             Console.Clear();
-            Console.Write("Drink name to delete: ");
+            Console.Write("Cocktail name to delete: ");
             string toDelete = Console.ReadLine();
             if (coCon.Get(toDelete) != null)
             {
                 coCon.Delete(toDelete);
-                Console.WriteLine("Removed drink: " + toDelete);
+                Console.WriteLine("Removed cocktail: " + toDelete);
             }
             ExitCurrentMenu();
         }
@@ -192,22 +244,29 @@ namespace Cocktails
         private static void SearchDrink()
         {
             Console.Clear();
-            Console.Write("Search for drink name: ");
-            var searchFor = coCon.GetBySearch(Console.ReadLine());
+            Console.Write("Search for cocktails name: ");
+            List<Cocktail> searchFor = coCon.GetBySearch(Console.ReadLine());
             Console.WriteLine("Drinks founded:\r\n");
-            foreach (Cocktail item in searchFor)
+            if (searchFor.Count > 0)
             {
-                Console.WriteLine("Cocktail: " + item.Name);
-                Console.WriteLine("Glass used: " + item.GlassType);
-
-                Console.WriteLine(" Ingredients:");
-                foreach (IngredientDescription ingredientDescription in item.IngredientDescription)
+                foreach (Cocktail item in searchFor)
                 {
-                    Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
-                    Console.WriteLine("  - " + ingredient.Name + " : " + ingredientDescription.Description);
-                }
+                    Console.WriteLine("Cocktail: " + item.Name);
+                    Console.WriteLine("Glass used: " + item.GlassType);
 
-                Console.WriteLine("\r\n");
+                    Console.WriteLine(" Ingredients:");
+                    foreach (IngredientDescription ingredientDescription in item.IngredientDescription)
+                    {
+                        Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
+                        Console.WriteLine("  - " + ingredient.Name + " : " + ingredientDescription.Description);
+                    }
+
+                    Console.WriteLine("\r\n");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Didn't find any cocktail with that name.");
             }
             ExitCurrentMenu();
         }

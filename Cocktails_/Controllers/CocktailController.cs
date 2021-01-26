@@ -38,6 +38,7 @@ namespace Cocktails.Controllers
                 context.SaveChanges();
             }
         }
+
         public void DeleteAll()
         {
             using (CocktailDBContext context = new CocktailDBContext())
