@@ -51,6 +51,9 @@ namespace Cocktails.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("CocktailName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -59,12 +62,9 @@ namespace Cocktails.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IngredientDescription")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("IngredientDescription");
+                    b.HasIndex("CocktailName");
 
                     b.ToTable("IngredientDescriptions");
                 });
@@ -73,7 +73,7 @@ namespace Cocktails.Migrations
                 {
                     b.HasOne("Cocktails.Models.Entities.Cocktail", null)
                         .WithMany("IngredientDescription")
-                        .HasForeignKey("IngredientDescription");
+                        .HasForeignKey("CocktailName");
                 });
 
             modelBuilder.Entity("Cocktails.Models.Entities.Cocktail", b =>

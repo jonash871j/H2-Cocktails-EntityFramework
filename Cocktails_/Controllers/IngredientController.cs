@@ -11,7 +11,7 @@ namespace Cocktails.Controllers
 
         public void Create(Ingredient ingredient)
         {
-            context.Add(ingredient);
+            context.Ingredients.Add(ingredient);
             context.SaveChanges();
         }
         public void Delete(string key)

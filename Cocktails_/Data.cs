@@ -31,8 +31,10 @@ namespace Cocktails
             inCon.Create(new Ingredient("French Dry Vermouth", IngredientType.Liquid));
             inCon.Create(new Ingredient("Gin", IngredientType.Liquid));
             inCon.Create(new Ingredient("White Rum", IngredientType.Liquid));
-            inCon.Create(new Ingredient("Pink Grapefruit", IngredientType.Liquid));
+            inCon.Create(new Ingredient("Pink Grapefruit Juice", IngredientType.Liquid));
+            inCon.Create(new Ingredient("Grapefruit Juice", IngredientType.Liquid));
             inCon.Create(new Ingredient("Cranberry Juice", IngredientType.Liquid));
+            inCon.Create(new Ingredient("Cointreau", IngredientType.Liquid));
             inCon.Create(new Ingredient("Soda", IngredientType.Liquid));
             inCon.Create(new Ingredient("Cherry Brandy", IngredientType.Liquid));
             inCon.Create(new Ingredient("Lemon Juice", IngredientType.Liquid));
@@ -42,6 +44,7 @@ namespace Cocktails
             inCon.Create(new Ingredient("Cola", IngredientType.Liquid));
             inCon.Create(new Ingredient("Peach Puree", IngredientType.Liquid));
             inCon.Create(new Ingredient("Prosecco", IngredientType.Liquid));
+
             inCon.Create(new Ingredient("Salt Rim", IngredientType.Solid));
             inCon.Create(new Ingredient("Crushed Ice", IngredientType.Solid));
             inCon.Create(new Ingredient("Lime Segment", IngredientType.Solid));
@@ -56,6 +59,7 @@ namespace Cocktails
             inCon.Create(new Ingredient("Cube Caster Sugar", IngredientType.Solid));
             inCon.Create(new Ingredient("Dash Angostura Bitters", IngredientType.Solid));
             inCon.Create(new Ingredient("Orange Peel", IngredientType.Solid));
+            inCon.Create(new Ingredient("Orange Segment", IngredientType.Solid));
             inCon.Create(new Ingredient("Ice", IngredientType.Solid));
             inCon.Create(new Ingredient("Olive", IngredientType.Solid));
             inCon.Create(new Ingredient("Mint Leave", IngredientType.Solid));
@@ -98,7 +102,7 @@ namespace Cocktails
                GlassType.OldFashioned,
                new List<IngredientDescription>()
                {
-                    new IngredientDescription(("White Russian"), "30ml"),
+                    new IngredientDescription(("Fresh Cream"), "30ml"),
                     new IngredientDescription(("Kahlua"), "30ml"),
                     new IngredientDescription(("Vodka"), "90ml"),
                })
@@ -130,7 +134,7 @@ namespace Cocktails
                     new IngredientDescription(("Tomato Juice"), "135ml"),
                     new IngredientDescription(("Vodka"), "45ml"),
                     new IngredientDescription(("Ice Cube"), "Own preference"),
-                    new IngredientDescription(("Clery stick"), "1x"),
+                    new IngredientDescription(("Celery Stick"), "1x"),
                })
             );
             coCon.Create(new Cocktail(
@@ -197,7 +201,7 @@ namespace Cocktails
                     new IngredientDescription(("Lime Juice"), "15ml"),
                     new IngredientDescription(("Pink Grapefruit Juice"), "15ml"),
                     new IngredientDescription(("Cranberry Juice"), "15ml"),
-                    new IngredientDescription(("CoinTreau"), "15ml"),
+                    new IngredientDescription(("Cointreau"), "15ml"),
                     new IngredientDescription(("Vodka"), "15ml"),
                 })
             );
@@ -237,7 +241,7 @@ namespace Cocktails
                     new IngredientDescription(("Bourbon"), "60ml"),
                     new IngredientDescription(("Mint Leave"), "4x"),
                     new IngredientDescription(("Brown Sugar"), "tsp"),
-                    new IngredientDescription(("Crushed Ice Cube"), "4x"),
+                    new IngredientDescription(("Crushed Ice"), "4x"),
                 })
             );
             coCon.Create(new Cocktail(

@@ -17,7 +17,6 @@ namespace Cocktails
     {
         static CocktailController coCon = new CocktailController();
         static IngredientController inCon = new IngredientController();
-        //IngredientController ingredientController = new IngredientController();
 
         // * Package Manager Console
         // EntityFrameworkCore\Add-Migration "InitialCreate"
@@ -27,6 +26,14 @@ namespace Cocktails
         {
             Data.SetDefaultIngredients();
             Data.SetDefaultCocktails();
+
+            bool showMenu = true;
+            while (showMenu)
+            {
+                showMenu = MainMenu();
+            }
+
+
             //controller.CreateCocktail(new Cocktail { Name = "Dummy2", Glass = GlassType.Collins, Ingredients = new List<Ingredient>() { new LiquidIngredient { Name = "SomeLiquid2", MlAmount = 100 } } });
 
 
@@ -81,10 +88,31 @@ namespace Cocktails
                     Console.WriteLine(ingredient.Name);
                     Console.WriteLine(ingredient.IngredientType);
                 }
-
+                 
                 Console.WriteLine("\r\n");
             }
             ExitCurrentMenu();
+        }
+
+        private static GlassType GetGlassType(ConsoleKey key)
+        {
+            switch (key)
+            {
+                case ConsoleKey.D1:
+                    return GlassType.OldFashioned;
+                case ConsoleKey.D2:
+                    return GlassType.Collins;
+                case ConsoleKey.D3:
+                    return GlassType.Martini;
+                case ConsoleKey.D4:
+                    return GlassType.Highball;
+                case ConsoleKey.D5:
+                    return GlassType.PocoGrande;
+                case ConsoleKey.D6:
+                    return GlassType.Flute;
+                default:
+                    return GlassType.Collins;
+            }
         }
 
         private static void CreateDrink()
@@ -98,36 +126,19 @@ namespace Cocktails
             Console.WriteLine(" 4. Highball");
             Console.WriteLine(" 5. Poco Grande");
             Console.WriteLine(" 6. Flute");
-            GlassType type;
-            switch (Console.ReadKey().Key)
-            {
-                case ConsoleKey.D1:
-                    type =  GlassType.OldFashioned;
-                    break;
-                case ConsoleKey.D2:
-                    type = GlassType.Collins;
-                    break;
-                case ConsoleKey.D3:
-                    type = GlassType.Martini;
-                    break;
-                case ConsoleKey.D4:
-                    type = GlassType.Highball;
-                    break;
-                case ConsoleKey.D5:
-                    type = GlassType.PocoGrande;
-                    break;
-                case ConsoleKey.D6:
-                    type = GlassType.Flute;
-                    break;
-                default:
-                    break;
-            }
+            GlassType type = GetGlassType(Console.ReadKey().Key);
 
-            foreach(var item in inCon.GetAll())
-            {
-                Console.WriteLine(item.Name);
-            }
-            //coCon.Create(new Cocktail(name, type, ));
+            Console.WriteLine("\r\n");
+            //foreach(var item in inCon.GetAll())
+            //{
+            //    Console.WriteLine(item.Name);
+            //}
+            Console.Write("\r\nChoose ingredient: ");
+
+            //List<IngredientDescription> ingredientDescriptions = new List<IngredientDescription>();
+            //ingredientDescriptions.Add()
+
+            //coCon.Create(new Cocktail(name, type,)
             ExitCurrentMenu();
         }
 
@@ -165,7 +176,7 @@ namespace Cocktails
 
                 Console.WriteLine("\r\n");
             }
-                ExitCurrentMenu();
+            ExitCurrentMenu();
         }
 
         private static void ExitCurrentMenu()
@@ -173,7 +184,5 @@ namespace Cocktails
             Console.WriteLine("\r\nPress any key to go back");
             Console.ReadKey();
         }
-
-     
     }
 }

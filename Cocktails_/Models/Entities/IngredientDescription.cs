@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cocktails.Models.Entities
@@ -15,7 +16,12 @@ namespace Cocktails.Models.Entities
         [Required]
         public string Description { get; set; }
 
-        // For some reason entity framework needs a default constructor
+        [ForeignKey("Cocktail")]
+        public string CocktailName { get; set; }
+
+        /// <summary>
+        /// For some reason entity framework needs a default constructor
+        /// </summary>
         public IngredientDescription() { }
         public IngredientDescription(string ingredient, string description)
         {

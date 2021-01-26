@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cocktails.Migrations
 {
     [DbContext(typeof(CocktailDBContext))]
-    [Migration("20210126125931_InitialCreate")]
+    [Migration("20210126142755_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,6 +53,9 @@ namespace Cocktails.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<string>("CocktailName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -61,12 +64,9 @@ namespace Cocktails.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IngredientDescription")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("IngredientDescription");
+                    b.HasIndex("CocktailName");
 
                     b.ToTable("IngredientDescriptions");
                 });
@@ -75,7 +75,7 @@ namespace Cocktails.Migrations
                 {
                     b.HasOne("Cocktails.Models.Entities.Cocktail", null)
                         .WithMany("IngredientDescription")
-                        .HasForeignKey("IngredientDescription");
+                        .HasForeignKey("CocktailName");
                 });
 
             modelBuilder.Entity("Cocktails.Models.Entities.Cocktail", b =>

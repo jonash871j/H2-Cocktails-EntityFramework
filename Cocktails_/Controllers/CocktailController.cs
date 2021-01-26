@@ -10,6 +10,7 @@ namespace Cocktails.Controllers
     public class CocktailController : IController<Cocktail, string>
     {
         private CocktailDBContext context = new CocktailDBContext();
+        private IngredientDescriptionController inDeCon = new IngredientDescriptionController();
 
         public void Create(Cocktail cocktail)
         {
@@ -35,6 +36,12 @@ namespace Cocktails.Controllers
         }
         public IEnumerable<Cocktail> GetAll()
         {
+            IEnumerable<Cocktail> cocktails = context.Cocktails;
+
+            foreach(Cocktail cocktail in cocktails)
+            {
+                cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+            }
             return context.Cocktails;
         }
         /// <summary>

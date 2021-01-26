@@ -11,9 +11,8 @@ namespace Cocktails.Models.Entities
 
         [Required]
         public GlassType GlassType { get; set; }
-
-        [ForeignKey("IngredientDescription")]
-        public List<IngredientDescription> IngredientDescription { get; set; }
+        [Required]
+        public List<IngredientDescription> IngredientDescription { get; set; } = new List<IngredientDescription>();
 
         // For some reason entity framework needs a default constructor
         public Cocktail() { }
