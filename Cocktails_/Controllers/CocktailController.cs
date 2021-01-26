@@ -25,8 +25,9 @@ namespace Cocktails.Controllers
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 Cocktail cocktail = Get(key);
-                context.Cocktails.Remove(cocktail);
                 context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+                context.Cocktails.Remove(cocktail);
+                context.SaveChanges();
             }
         }
         public void DeleteAll()
