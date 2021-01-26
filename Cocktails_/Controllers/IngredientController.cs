@@ -45,5 +45,12 @@ namespace Cocktails.Controllers
                 return context.Ingredients.ToList();
             }
         }
+        public void Update(Ingredient @object)
+        {
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                //cocktails = context.Cocktails.Where(c => c.Name.Contains(search)).ToList();
+            }
+        }
     }
 }

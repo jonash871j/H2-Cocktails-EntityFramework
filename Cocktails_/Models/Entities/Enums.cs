@@ -2,6 +2,7 @@
 {
     public enum GlassType
     {
+        None = -1,
         OldFashioned,
         Collins,
         Martini,

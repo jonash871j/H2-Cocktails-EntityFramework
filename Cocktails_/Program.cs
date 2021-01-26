@@ -118,37 +118,57 @@ namespace Cocktails
                 case ConsoleKey.D6:
                     return GlassType.Flute;
                 default:
-                    return GlassType.Collins;
+                    return GlassType.None;
             }
         }
 
         private static void CreateDrink()
         {
+            Cocktail cocktail = new Cocktail();
+
+      
+
             Console.Clear();
-            Console.Write("Name of drink: ");
-            string name = Console.ReadLine();
-            Console.WriteLine("\r\nGlass type:");
-            Console.WriteLine(" 1. Old Fashioned");
-            Console.WriteLine(" 2. Collins");
-            Console.WriteLine(" 3. Martini");
-            Console.WriteLine(" 4. Highball");
-            Console.WriteLine(" 5. Poco Grande");
-            Console.WriteLine(" 6. Flute");
-            GlassType type = GetGlassType(Console.ReadKey().Key);
 
-            Console.WriteLine("\r\n");
-            //foreach(var item in inCon.GetAll())
-            //{
-            //    Console.WriteLine(item.Name);
-            //}
-            //Console.Write("\r\nChoose ingredient: ");
+            try
+            {
+                GetCocktailNameInput();
+                GetCocktailGlass();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Cocktail was not created: " + ex.Message);
+            }
 
-            //List<IngredientDescription> ingredientDescriptions = new List<IngredientDescription>();
-            //ingredientDescriptions.Add()
 
-            //coCon.Create(new Cocktail(name, type,)
-            Console.WriteLine("Error! Incorrect input");
             ExitCurrentMenu();
+
+            void GetCocktailNameInput()
+            {
+                Console.Write("Name of drink: ");
+                cocktail.Name = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(cocktail.Name))
+                    throw new Exception("Name is empty");
+            }
+            void GetCocktailGlass()
+            {
+                string[] glassTypes = Enum.GetNames(typeof(GlassType));
+                for (int i = 0; i < glassTypes.Length; i++)
+                {
+                    Console.WriteLine($" {i}. {glassTypes[i]}");
+                }
+                Console.WriteLine("\r\nGlass type:");
+
+                cocktail.GlassType = GetGlassType(Console.ReadKey().Key);
+
+                if (cocktail.GlassType == GlassType.None)
+                    throw new Exception("Invalid glass");
+            }
+            void GetIngredientDescriptions()
+            {
+
+            }
         }
 
         private static void DeleteDrink()
