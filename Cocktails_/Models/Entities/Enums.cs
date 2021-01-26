@@ -1,4 +1,4 @@
-﻿namespace CocktailsLib.Models
+﻿namespace Cocktails.Models.Entities
 {
     public enum GlassType
     {
@@ -8,5 +8,10 @@
         Highball,
         PocoGrande,
         Flute,
+    }
+    public enum IngredientType
+    {
+        Liquid,
+        Solid,
     }
 }
