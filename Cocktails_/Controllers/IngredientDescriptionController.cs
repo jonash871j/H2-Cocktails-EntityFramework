@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Cocktails.Models.Entities;
+using System;
 
 namespace Cocktails.Controllers
 {
@@ -33,7 +34,7 @@ namespace Cocktails.Controllers
         }
         public IngredientDescription Get(string key)
         {
-            return null;
+            throw new NotImplementedException();
         }
         public List<IngredientDescription> GetByCocktailName(string cocktailName)
         {
@@ -51,10 +52,7 @@ namespace Cocktails.Controllers
         }
         public void Update(IngredientDescription @object)
         {
-            using (CocktailDBContext context = new CocktailDBContext())
-            {
-                //cocktails = context.Cocktails.Where(c => c.Name.Contains(search)).ToList();
-            }
+            throw new NotImplementedException();
         }
     }
 }

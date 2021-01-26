@@ -10,7 +10,7 @@ namespace Cocktails.Controllers
         /// <param name="object">object refrence</param>
         public void Create(T @object);
         /// <summary>
-        /// Used to update object in table
+        /// Used to create object in table
         /// </summary>
         /// <param name="object">object refrence</param>
         public void Update(T @object);
