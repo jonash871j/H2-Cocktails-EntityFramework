@@ -44,7 +44,7 @@ namespace Cocktails.Controllers
             {
                 IEnumerable<Cocktail> cocktails = context.Cocktails;
                 Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
-                cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+                cocktail = GetIngredientDescription(cocktail);
 
                 return cocktail;
             }
@@ -57,9 +57,9 @@ namespace Cocktails.Controllers
             {
                 cocktails = context.Cocktails.ToList();
             }
-            foreach (Cocktail cocktail in cocktails)
+            for (int i = 0; i < cocktails.Count; i++)
             {
-                cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+                cocktails[i] = GetIngredientDescription(cocktails[i]);
             }
 
             return cocktails;
@@ -70,10 +70,24 @@ namespace Cocktails.Controllers
         /// <param name="search">Name of cocktail</param>
         public List<Cocktail> GetBySearch(string search)
         {
+            List<Cocktail> cocktails;
+
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                return context.Cocktails.Where(c => c.Name.Contains(search)).ToList();
+                cocktails = context.Cocktails.Where(c => c.Name.Contains(search)).ToList();
             }
+            for (int i = 0; i < cocktails.Count; i++)
+            {
+                cocktails[i] = GetIngredientDescription(cocktails[i]);
+            }
+
+            return cocktails;
+        }
+
+        private Cocktail GetIngredientDescription(Cocktail cocktail)
+        {
+            cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+            return cocktail;
         }
     }
 }
