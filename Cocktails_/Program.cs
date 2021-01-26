@@ -133,7 +133,7 @@ namespace Cocktails
             //{
             //    Console.WriteLine(item.Name);
             //}
-            Console.Write("\r\nChoose ingredient: ");
+            //Console.Write("\r\nChoose ingredient: ");
 
             //List<IngredientDescription> ingredientDescriptions = new List<IngredientDescription>();
             //ingredientDescriptions.Add()

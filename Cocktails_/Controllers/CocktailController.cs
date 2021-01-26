@@ -32,7 +32,11 @@ namespace Cocktails.Controllers
         }
         public Cocktail Get(string key)
         {
-            return context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
+            IEnumerable<Cocktail> cocktails = context.Cocktails;
+            Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
+            cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+
+            return cocktail;
         }
         public IEnumerable<Cocktail> GetAll()
         {
