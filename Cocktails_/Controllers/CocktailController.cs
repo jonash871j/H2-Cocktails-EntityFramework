@@ -44,7 +44,7 @@ namespace Cocktails.Controllers
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 IEnumerable<Cocktail> cocktails = context.Cocktails;
-                Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
+               Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
                 cocktail = GetIngredientDescription(cocktail);
 
                 return cocktail;
