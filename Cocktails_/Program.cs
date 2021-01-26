@@ -53,9 +53,10 @@ namespace Cocktails
             Console.WriteLine("Choose an option:");
             Console.WriteLine(" 1. List with cocktails");
             Console.WriteLine(" 2. Create cocktail");
-            Console.WriteLine(" 3. Delete cocktail");
-            Console.WriteLine(" 4. Search for cocktails");
-            Console.WriteLine(" 5. Set default cocktails");
+            Console.WriteLine(" 3. Update cocktail");
+            Console.WriteLine(" 4. Delete cocktail");
+            Console.WriteLine(" 5. Search for cocktails");
+            Console.WriteLine(" 6. Set default cocktails");
             Console.Write("\r\nSelect an option: ");
             switch (Console.ReadKey().Key)
             {
@@ -66,12 +67,15 @@ namespace Cocktails
                     CreateDrink();
                     return true;
                 case ConsoleKey.D3:
-                    DeleteDrink();
+                    UpdateDrink();
                     return true;
                 case ConsoleKey.D4:
-                    SearchDrink();
+                    DeleteDrink();
                     return true;
                 case ConsoleKey.D5:
+                    SearchDrink();
+                    return true;
+                case ConsoleKey.D6:
                     Data.SetDefaultCocktails();
                     Data.SetDefaultIngredients();
                     return true;
@@ -182,41 +186,31 @@ namespace Cocktails
             Console.Clear();
             Console.Write("Write the cocktail name: ");
             string cocktailName = Console.ReadLine();
-            Cocktail cocktail = coCon.Get(cocktailName);
+            var cocktail = coCon.Get(cocktailName);
             if (cocktail != null)
             {
                 Console.WriteLine("\r\nChoose to edit:");
-                Console.WriteLine(" 1. Name");
-                Console.WriteLine(" 2. Glass type");
+                Console.WriteLine(" 1. Glass type");
+                Console.WriteLine(" 2. Ingredients");
                 Console.Write("\r\nYour choice: ");
                 ConsoleKey key = Console.ReadKey().Key;
                 if (key == ConsoleKey.D1)
                 {
-                    ChangeCocktailName(cocktail);
+                    ChangeCocktailGlassType(cocktail);
                 }
                 else if (key == ConsoleKey.D2)
                 {
-                    ChangeCocktailGlassType(cocktail);
+                    ChangeCocktailIngredients(cocktail);
                 }
             
             }
-            
+            coCon.Update(cocktail);
             ExitCurrentMenu();
-        }
-
-        private static void ChangeCocktailName(Cocktail cocktail)
-        {
-            Console.Write("\r\nNew name: ");
-            string newName = Console.ReadLine();
-            if (newName.Length > 0)
-            {
-                cocktail.Name = newName;
-                Console.WriteLine("Name changed!");
-            }
         }
 
         private static void ChangeCocktailGlassType(Cocktail cocktail)
         {
+            Console.Clear();
             Console.WriteLine("\r\nNew Glass type:");
             Console.WriteLine(" 1. Old Fashioned");
             Console.WriteLine(" 2. Collins");
@@ -226,6 +220,26 @@ namespace Cocktails
             Console.WriteLine(" 6. Flute");
             GlassType type = GetGlassType(Console.ReadKey().Key);
             cocktail.GlassType = type;
+        }
+
+        private static void ChangeCocktailIngredients(Cocktail cocktail)
+        {
+            Console.Clear();
+            Console.WriteLine(cocktail.Name + "'s ingredients:");
+            for (int i = 0; i < cocktail.IngredientDescription.Count; i++)
+            {
+                Console.WriteLine((i + 1) + ". " + cocktail.IngredientDescription[i].Ingredient + " : " + cocktail.IngredientDescription[i].Description);
+            }
+            Console.Write("\r\nWrite ingredient number to update: ");
+            try
+            {
+                int number = int.Parse(Console.ReadLine());
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private static void DeleteDrink()
