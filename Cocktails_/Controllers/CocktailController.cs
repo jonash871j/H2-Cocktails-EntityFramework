@@ -21,8 +21,8 @@ namespace Cocktails.Controllers
         public void Delete(string key)
         {
             Cocktail cocktail = Get(key);
-            context.Cocktails.Remove(cocktail);
             context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+            context.Cocktails.Remove(cocktail);
         }
         public void DeleteAll()
         {

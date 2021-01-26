@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cocktails.Migrations
 {
     [DbContext(typeof(CocktailDBContext))]
-    [Migration("20210126142755_InitialCreate")]
+    [Migration("20210126150827_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

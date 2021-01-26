@@ -24,8 +24,11 @@ namespace Cocktails
 
         static void Main(string[] args)
         {
-            Data.SetDefaultIngredients();
-            Data.SetDefaultCocktails();
+            if (coCon.GetAll().Count() == 0)
+            {
+                Data.SetDefaultIngredients();
+                Data.SetDefaultCocktails();
+            }
 
             bool showMenu = true;
             while (showMenu)
@@ -52,6 +55,7 @@ namespace Cocktails
             Console.WriteLine(" 2. Create Drink");
             Console.WriteLine(" 3. Delete Drink");
             Console.WriteLine(" 4. Search for Drink");
+            Console.WriteLine(" 5. Set default cocktails");
             Console.Write("\r\nSelect an option: ");
             switch (Console.ReadKey().Key)
             {
@@ -67,6 +71,10 @@ namespace Cocktails
                 case ConsoleKey.D4:
                     SearchDrink();
                     return true;
+                case ConsoleKey.D5:
+                    Data.SetDefaultCocktails();
+                    Data.SetDefaultIngredients();
+                    return true;
                 default:
                     return false;
             }
@@ -78,15 +86,14 @@ namespace Cocktails
 
             foreach (Cocktail item in coCon.GetAll())
             {
-                Console.WriteLine(item.Name);
-                Console.WriteLine(item.GlassType);
+                Console.WriteLine("Cocktail: " + item.Name);
+                Console.WriteLine("Glass used: " + item.GlassType);
 
-                Console.WriteLine("\r\nIngredients:");
+                Console.WriteLine(" Ingredients:");
                 foreach(IngredientDescription ingredientDescription in item.IngredientDescription)
                 {
                     Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
-                    Console.WriteLine(ingredient.Name);
-                    Console.WriteLine(ingredient.IngredientType);
+                    Console.WriteLine("  - " + ingredient.Name + " : " + ingredientDescription.Description);
                 }
                  
                 Console.WriteLine("\r\n");
@@ -117,6 +124,7 @@ namespace Cocktails
 
         private static void CreateDrink()
         {
+            Console.Clear();
             Console.Write("Name of drink: ");
             string name = Console.ReadLine();
             Console.WriteLine("\r\nGlass type:");
@@ -139,6 +147,7 @@ namespace Cocktails
             //ingredientDescriptions.Add()
 
             //coCon.Create(new Cocktail(name, type,)
+            Console.WriteLine("Error! Incorrect input");
             ExitCurrentMenu();
         }
 
@@ -160,18 +169,17 @@ namespace Cocktails
             Console.Clear();
             Console.Write("Search for drink name: ");
             var searchFor = coCon.GetBySearch(Console.ReadLine());
-            Console.WriteLine("Drinks founded:");
+            Console.WriteLine("Drinks founded:\r\n");
             foreach (Cocktail item in searchFor)
             {
-                Console.WriteLine(item.Name);
-                Console.WriteLine(item.GlassType);
+                Console.WriteLine("Cocktail: " + item.Name);
+                Console.WriteLine("Glass used: " + item.GlassType);
 
-                Console.WriteLine("\r\nIngredients:");
+                Console.WriteLine(" Ingredients:");
                 foreach (IngredientDescription ingredientDescription in item.IngredientDescription)
                 {
                     Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
-                    Console.WriteLine(ingredient.Name);
-                    Console.WriteLine(ingredient.IngredientType);
+                    Console.WriteLine("  - " + ingredient.Name + " : " + ingredientDescription.Description);
                 }
 
                 Console.WriteLine("\r\n");
