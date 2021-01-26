@@ -1,10 +1,7 @@
 ﻿using Cocktails.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Cocktails.Models
 {
@@ -16,16 +13,15 @@ namespace Cocktails.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=(local); Initial Catalog=CocktailDB; Integrated Security=SSPI");
-            //if (!optionsBuilder.IsConfigured)
-            //{
-            //    IConfigurationRoot configuration = new ConfigurationBuilder()
-            //       .SetBasePath(Directory.GetCurrentDirectory())
-            //       .AddJsonFile("appsettings.json")
-            //       .Build();
-            //    var connectionString = configuration.GetConnectionString("DevConnection");
-            //    optionsBuilder.UseSqlServer(connectionString);
-            //}
+            // Sets up json configuration
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .Build();
+
+            // Reads connection string from config file
+            string connectionString = configuration.GetConnectionString("DevConnection");
+            optionsBuilder.UseSqlServer(connectionString);
         }
     }
 }

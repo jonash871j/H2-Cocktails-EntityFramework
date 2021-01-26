@@ -15,8 +15,8 @@ namespace Cocktails
 {
     class Program
     {
-        static CocktailController cocktailController = new CocktailController();
-        static IngredientController ingredientController = new IngredientController();
+        static CocktailController coCon = new CocktailController();
+        static IngredientController inCon = new IngredientController();
         //IngredientController ingredientController = new IngredientController();
 
         // * Package Manager Console
@@ -25,7 +25,8 @@ namespace Cocktails
 
         static void Main(string[] args)
         {
-            AddIngredients();
+            Data.SetDefaultIngredients();
+            Data.SetDefaultCocktails();
             //controller.CreateCocktail(new Cocktail { Name = "Dummy2", Glass = GlassType.Collins, Ingredients = new List<Ingredient>() { new LiquidIngredient { Name = "SomeLiquid2", MlAmount = 100 } } });
 
 
@@ -36,52 +37,143 @@ namespace Cocktails
             //}
         }
 
-        static void AddIngredients()
+        private static bool MainMenu()
         {
-            ingredientController.Create(new Ingredient("Lime Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Triple Sec", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Tequila", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Dark Rum", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Orange Curacao", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Almond Syrup", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Fresh Cream", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Kahlua", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Vodka", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Cachaca", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Orange Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Tomato Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Bourbon", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Water", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Italian Sweet Vermouth", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Fresh Dry Vermouth", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Gin", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("White Rum", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Pink Grapefruit", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Cranberry Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Soda", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Cherry Brandy", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Lemon Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Sloe Gin", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Pineapple Juice", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Coconut Cream", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Cola", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Peach Puree", IngredientType.Liquid));
-            ingredientController.Create(new Ingredient("Prosecco", IngredientType.Liquid));
+            Console.Clear();
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine(" 1. List with drinks");
+            Console.WriteLine(" 2. Create Drink");
+            Console.WriteLine(" 3. Delete Drink");
+            Console.WriteLine(" 4. Search for Drink");
+            Console.Write("\r\nSelect an option: ");
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.D1:
+                    DrinkList();
+                    return true;
+                case ConsoleKey.D2:
+                    CreateDrink();
+                    return true;
+                case ConsoleKey.D3:
+                    DeleteDrink();
+                    return true;
+                case ConsoleKey.D4:
+                    SearchDrink();
+                    return true;
+                default:
+                    return false;
+            }
         }
-        static void AddCocktails()
+        private static void DrinkList()
         {
+            Console.Clear();
+            Console.WriteLine("List with drinks:");
 
+            foreach (Cocktail item in coCon.GetAll())
+            {
+                Console.WriteLine(item.Name);
+                Console.WriteLine(item.GlassType);
+
+                Console.WriteLine("\r\nIngredients:");
+                foreach(IngredientDescription ingredientDescription in item.IngredientDescription)
+                {
+                    Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
+                    Console.WriteLine(ingredient.Name);
+                    Console.WriteLine(ingredient.IngredientType);
+                }
+
+                Console.WriteLine("\r\n");
+            }
+            ExitCurrentMenu();
         }
 
-        //static IHostBuilder CreateHostBuilder(string[] args)
-        //{
-        //    return Host.CreateDefaultBuilder(args)
-        //        .ConfigureServices((hostContext, services) =>
-        //        {
-        //            services.AddDbContext<CocktailDBContext>();
-        //        });
-        //}
+        private static void CreateDrink()
+        {
+            Console.Write("Name of drink: ");
+            string name = Console.ReadLine();
+            Console.WriteLine("\r\nGlass type:");
+            Console.WriteLine(" 1. Old Fashioned");
+            Console.WriteLine(" 2. Collins");
+            Console.WriteLine(" 3. Martini");
+            Console.WriteLine(" 4. Highball");
+            Console.WriteLine(" 5. Poco Grande");
+            Console.WriteLine(" 6. Flute");
+            GlassType type;
+            switch (Console.ReadKey().Key)
+            {
+                case ConsoleKey.D1:
+                    type =  GlassType.OldFashioned;
+                    break;
+                case ConsoleKey.D2:
+                    type = GlassType.Collins;
+                    break;
+                case ConsoleKey.D3:
+                    type = GlassType.Martini;
+                    break;
+                case ConsoleKey.D4:
+                    type = GlassType.Highball;
+                    break;
+                case ConsoleKey.D5:
+                    type = GlassType.PocoGrande;
+                    break;
+                case ConsoleKey.D6:
+                    type = GlassType.Flute;
+                    break;
+                default:
+                    break;
+            }
 
+            foreach(var item in inCon.GetAll())
+            {
+                Console.WriteLine(item.Name);
+            }
+            //coCon.Create(new Cocktail(name, type, ));
+            ExitCurrentMenu();
+        }
+
+        private static void DeleteDrink()
+        {
+            Console.Clear();
+            Console.Write("Drink name to delete: ");
+            string toDelete = Console.ReadLine();
+            if (coCon.Get(toDelete) != null)
+            {
+                coCon.Delete(toDelete);
+                Console.WriteLine("Removed drink: " + toDelete);
+            }
+            ExitCurrentMenu();
+        }
+
+        private static void SearchDrink()
+        {
+            Console.Clear();
+            Console.Write("Search for drink name: ");
+            var searchFor = coCon.GetBySearch(Console.ReadLine());
+            Console.WriteLine("Drinks founded:");
+            foreach (Cocktail item in searchFor)
+            {
+                Console.WriteLine(item.Name);
+                Console.WriteLine(item.GlassType);
+
+                Console.WriteLine("\r\nIngredients:");
+                foreach (IngredientDescription ingredientDescription in item.IngredientDescription)
+                {
+                    Ingredient ingredient = inCon.Get(ingredientDescription.Ingredient);
+                    Console.WriteLine(ingredient.Name);
+                    Console.WriteLine(ingredient.IngredientType);
+                }
+
+                Console.WriteLine("\r\n");
+            }
+                ExitCurrentMenu();
+        }
+
+        private static void ExitCurrentMenu()
+        {
+            Console.WriteLine("\r\nPress any key to go back");
+            Console.ReadKey();
+        }
+
+     
     }
-
 }

@@ -6,11 +6,11 @@ namespace Cocktails.Models.Entities
     {
         [Key]
         public string Name { get; set; }
+
+        [Required]
         public IngredientType IngredientType { get; set; }
 
-        /// <summary>
-        /// For some reason entity framework needs a default constructor
-        /// </summary>
+        // For some reason entity framework needs a default constructor
         public Ingredient() { }
         public Ingredient(string name, IngredientType ingredientType)
         {

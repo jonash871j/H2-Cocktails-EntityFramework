@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cocktails.Models.Entities
 {
@@ -7,18 +8,20 @@ namespace Cocktails.Models.Entities
     {
         [Key]
         public string Name { get; set; }
-        public List<IngredientDescription> Ingredients { get; set; }
+
+        [Required]
         public GlassType GlassType { get; set; }
 
-        /// <summary>
-        /// For some reason entity framework needs a default constructor
-        /// </summary>
+        [ForeignKey("IngredientDescription")]
+        public List<IngredientDescription> IngredientDescription { get; set; }
+
+        // For some reason entity framework needs a default constructor
         public Cocktail() { }
-        public Cocktail(string name, List<IngredientDescription> ingredients, GlassType glassType)
+        public Cocktail(string name, GlassType glassType, List<IngredientDescription> ingredientDescriptions)
         {
             Name = name;
-            Ingredients = ingredients;
             GlassType = glassType;
+            IngredientDescription = ingredientDescriptions;
         }
     }
 }

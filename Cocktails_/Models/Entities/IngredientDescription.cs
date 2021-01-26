@@ -6,16 +6,18 @@ namespace Cocktails.Models.Entities
     public class IngredientDescription
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public Ingredient Ingredient { get; set; }
+
+        [Required]
+        public string Ingredient { get; set; }
+
+        [Required]
         public string Description { get; set; }
 
-        /// <summary>
-        /// For some reason entity framework needs a default constructor
-        /// </summary>
+        // For some reason entity framework needs a default constructor
         public IngredientDescription() { }
-        public IngredientDescription(Ingredient ingredient, string description)
+        public IngredientDescription(string ingredient, string description)
         {
             Ingredient = ingredient;
             Description = description;

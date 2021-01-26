@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Cocktails.Migrations
 {
     [DbContext(typeof(CocktailDBContext))]
-    [Migration("20210126110811_InitialCreate")]
+    [Migration("20210126125931_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -53,20 +53,20 @@ namespace Cocktails.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("CocktailName")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IngredientName")
+                    b.Property<string>("Ingredient")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IngredientDescription")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CocktailName");
-
-                    b.HasIndex("IngredientName");
+                    b.HasIndex("IngredientDescription");
 
                     b.ToTable("IngredientDescriptions");
                 });
@@ -74,19 +74,13 @@ namespace Cocktails.Migrations
             modelBuilder.Entity("Cocktails.Models.Entities.IngredientDescription", b =>
                 {
                     b.HasOne("Cocktails.Models.Entities.Cocktail", null)
-                        .WithMany("Ingredients")
-                        .HasForeignKey("CocktailName");
-
-                    b.HasOne("Cocktails.Models.Entities.Ingredient", "Ingredient")
-                        .WithMany()
-                        .HasForeignKey("IngredientName");
-
-                    b.Navigation("Ingredient");
+                        .WithMany("IngredientDescription")
+                        .HasForeignKey("IngredientDescription");
                 });
 
             modelBuilder.Entity("Cocktails.Models.Entities.Cocktail", b =>
                 {
-                    b.Navigation("Ingredients");
+                    b.Navigation("IngredientDescription");
                 });
 #pragma warning restore 612, 618
         }

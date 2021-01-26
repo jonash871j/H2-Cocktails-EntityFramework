@@ -1,7 +1,5 @@
 ﻿using Cocktails.Models;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using Cocktails.Models.Entities;
 
@@ -16,12 +14,20 @@ namespace Cocktails.Controllers
             context.Add(ingredient);
             context.SaveChanges();
         }
-
-        public IEnumerable<Ingredient> Get(string key)
+        public void Delete(string key)
         {
-            return GetAll().Where(c => c.Name == key);
+            Ingredient ingredient = Get(key);
+            context.Ingredients.Remove(ingredient);
         }
-
+        public void DeleteAll()
+        {
+            context.Ingredients.RemoveRange(context.Ingredients);
+            context.SaveChanges();
+        }
+        public Ingredient Get(string key)
+        {
+            return context.Ingredients.Where(c => c.Name == key).FirstOrDefault();
+        }
         public IEnumerable<Ingredient> GetAll()
         {
             return context.Ingredients;
