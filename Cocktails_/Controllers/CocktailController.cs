@@ -9,52 +9,71 @@ namespace Cocktails.Controllers
 {
     public class CocktailController : IController<Cocktail, string>
     {
-        private CocktailDBContext context = new CocktailDBContext();
         private IngredientDescriptionController inDeCon = new IngredientDescriptionController();
 
         public void Create(Cocktail cocktail)
         {
-            context.Cocktails.Add(cocktail);
-            context.IngredientDescriptions.AddRange(cocktail.IngredientDescription);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.Cocktails.Add(cocktail);
+                context.IngredientDescriptions.AddRange(cocktail.IngredientDescription);
+                context.SaveChanges();
+            }
         }
         public void Delete(string key)
         {
-            Cocktail cocktail = Get(key);
-            context.Cocktails.Remove(cocktail);
-            context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                Cocktail cocktail = Get(key);
+                context.Cocktails.Remove(cocktail);
+                context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+            }
         }
         public void DeleteAll()
         {
-            context.Cocktails.RemoveRange(context.Cocktails);
-            context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
+                context.Cocktails.RemoveRange(context.Cocktails);
+                context.SaveChanges();
+            }
         }
         public Cocktail Get(string key)
         {
-            IEnumerable<Cocktail> cocktails = context.Cocktails;
-            Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
-            cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                IEnumerable<Cocktail> cocktails = context.Cocktails;
+                Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
+                cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
 
-            return cocktail;
+                return cocktail;
+            }
         }
-        public IEnumerable<Cocktail> GetAll()
+        public List<Cocktail> GetAll()
         {
-            IEnumerable<Cocktail> cocktails = context.Cocktails;
+            List<Cocktail> cocktails;
 
-            foreach(Cocktail cocktail in cocktails)
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                cocktails = context.Cocktails.ToList();
+            }
+            foreach (Cocktail cocktail in cocktails)
             {
                 cocktail.IngredientDescription.AddRange(inDeCon.GetByCocktailName(cocktail.Name));
             }
-            return context.Cocktails;
+
+            return cocktails;
         }
         /// <summary>
         /// Used to get cocktails by a contain search
         /// </summary>
         /// <param name="search">Name of cocktail</param>
-        public IEnumerable<Cocktail> GetBySearch(string search)
+        public List<Cocktail> GetBySearch(string search)
         {
-            return context.Cocktails.Where(c => c.Name.Contains(search));
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                return context.Cocktails.Where(c => c.Name.Contains(search)).ToList();
+            }
         }
     }
 }

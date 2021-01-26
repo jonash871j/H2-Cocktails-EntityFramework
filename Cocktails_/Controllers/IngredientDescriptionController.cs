@@ -7,34 +7,47 @@ namespace Cocktails.Controllers
 {
     public class IngredientDescriptionController : IController<IngredientDescription, string>
     {
-        private CocktailDBContext context = new CocktailDBContext();
-
         public void Create(IngredientDescription ingredientDescription)
         {
-            context.IngredientDescriptions.Add(ingredientDescription);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.IngredientDescriptions.Add(ingredientDescription);
+                context.SaveChanges();
+            }
         }
         public void Delete(string key)
         {
-            IngredientDescription ingredientDescriptions = Get(key);
-            context.IngredientDescriptions.Remove(ingredientDescriptions);
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                IngredientDescription ingredientDescriptions = Get(key);
+                context.IngredientDescriptions.Remove(ingredientDescriptions);
+            }
         }
         public void DeleteAll()
         {
-            context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
+                context.SaveChanges();
+            }
         }
         public IngredientDescription Get(string key)
         {
             return null;
         }
-        public IEnumerable<IngredientDescription> GetByCocktailName(string cocktailName)
+        public List<IngredientDescription> GetByCocktailName(string cocktailName)
         {
-            return context.IngredientDescriptions.Where(c => c.CocktailName == cocktailName);
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                return context.IngredientDescriptions.Where(c => c.CocktailName == cocktailName).ToList();
+            }
         }
-        public IEnumerable<IngredientDescription> GetAll()
+        public List<IngredientDescription> GetAll()
         {
-            return context.IngredientDescriptions;
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                return context.IngredientDescriptions.ToList();
+            }
         }
     }
 }

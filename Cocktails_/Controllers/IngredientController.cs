@@ -7,30 +7,43 @@ namespace Cocktails.Controllers
 {
     public class IngredientController : IController<Ingredient, string>
     {
-        private CocktailDBContext context = new CocktailDBContext();
-
         public void Create(Ingredient ingredient)
         {
-            context.Ingredients.Add(ingredient);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.Ingredients.Add(ingredient);
+                context.SaveChanges();
+            }
         }
         public void Delete(string key)
         {
-            Ingredient ingredient = Get(key);
-            context.Ingredients.Remove(ingredient);
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                Ingredient ingredient = Get(key);
+                context.Ingredients.Remove(ingredient);
+            }
         }
         public void DeleteAll()
         {
-            context.Ingredients.RemoveRange(context.Ingredients);
-            context.SaveChanges();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                context.Ingredients.RemoveRange(context.Ingredients);
+                context.SaveChanges();
+            }
         }
         public Ingredient Get(string key)
         {
-            return context.Ingredients.Where(c => c.Name == key).FirstOrDefault();
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                return context.Ingredients.Where(c => c.Name == key).FirstOrDefault();
+            }
         }
-        public IEnumerable<Ingredient> GetAll()
+        public List<Ingredient> GetAll()
         {
-            return context.Ingredients;
+            using (CocktailDBContext context = new CocktailDBContext())
+            {
+                return context.Ingredients.ToList();
+            }
         }
     }
 }
