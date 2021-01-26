@@ -25,8 +25,9 @@ namespace Cocktails.Controllers
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 Cocktail cocktail = Get(key);
-                context.Cocktails.Remove(cocktail);
                 context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+                context.Cocktails.Remove(cocktail);
+                context.SaveChanges();
             }
         }
         public void DeleteAll()
@@ -43,7 +44,7 @@ namespace Cocktails.Controllers
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 IEnumerable<Cocktail> cocktails = context.Cocktails;
-                Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
+               Cocktail cocktail = context.Cocktails.Where(c => c.Name == key).FirstOrDefault();
                 cocktail = GetIngredientDescription(cocktail);
 
                 return cocktail;
