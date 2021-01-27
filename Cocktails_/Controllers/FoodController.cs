@@ -6,13 +6,13 @@ using System;
 
 namespace Cocktails.Controllers
 {
-    public class IngredientDescriptionController : IController<IngredientDescription, string>
+    public class FoodController : IController<Food, string>
     {
-        public void Create(IngredientDescription ingredientDescription)
+        public void Create(Food food)
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                context.IngredientDescriptions.Add(ingredientDescription);
+                context.Foods.Add(food);
                 context.SaveChanges();
             }
         }
@@ -20,37 +20,33 @@ namespace Cocktails.Controllers
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                IngredientDescription ingredientDescriptions = Get(key);
-                context.IngredientDescriptions.Remove(ingredientDescriptions);
+                Food food = Get(key);
+                context.Foods.Remove(food);
             }
         }
         public void DeleteAll()
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
+                context.Foods.RemoveRange(context.Foods);
                 context.SaveChanges();
             }
         }
-        public IngredientDescription Get(string key)
-        {
-            throw new NotImplementedException();
-        }
-        public List<IngredientDescription> GetByCocktailName(string cocktailName)
+        public Food Get(string key)
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                return context.IngredientDescriptions.Where(c => c.CocktailName == cocktailName).ToList();
+                return context.Foods.Where(c => c.Name == key).FirstOrDefault();
             }
         }
-        public List<IngredientDescription> GetAll()
+        public List<Food> GetAll()
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                return context.IngredientDescriptions.ToList();
+                return context.Foods.ToList();
             }
         }
-        public void Update(IngredientDescription @object)
+        public void Update(Food @object)
         {
             throw new NotImplementedException();
         }

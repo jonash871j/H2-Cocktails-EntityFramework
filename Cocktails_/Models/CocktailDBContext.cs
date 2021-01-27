@@ -8,8 +8,8 @@ namespace Cocktails.Models
     public class CocktailDBContext : DbContext
     {
         public DbSet<Cocktail> Cocktails { get; set; }
-        public DbSet<IngredientDescription> IngredientDescriptions { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Food> Foods { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

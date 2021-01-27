@@ -20,8 +20,8 @@ namespace Cocktails.Controllers
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                Ingredient ingredient = Get(key);
-                context.Ingredients.Remove(ingredient);
+                Ingredient ingredients = Get(key);
+                context.Ingredients.Remove(ingredients);
             }
         }
         public void DeleteAll()
@@ -34,9 +34,13 @@ namespace Cocktails.Controllers
         }
         public Ingredient Get(string key)
         {
+            throw new NotImplementedException();
+        }
+        public List<Ingredient> GetByCocktailName(string cocktailName)
+        {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                return context.Ingredients.Where(c => c.Name == key).FirstOrDefault();
+                return context.Ingredients.Where(c => c.CocktailName == cocktailName).ToList();
             }
         }
         public List<Ingredient> GetAll()

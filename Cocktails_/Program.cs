@@ -9,7 +9,7 @@ namespace Cocktails
     class Program
     {
         static CocktailController cocktailController = new CocktailController();
-        static IngredientController ingredientController = new IngredientController();
+        static FoodController ingredientController = new FoodController();
 
         static int Main(string[] args)
         {
@@ -131,11 +131,11 @@ namespace Cocktails
         }
         static void UiGetIngredientDescriptions(Cocktail cocktail)
         {
-            List<Ingredient> ingredients = ingredientController.GetAll();
+            List<Food> ingredients = ingredientController.GetAll();
 
             for (int i = 0; i < ingredients.Count; i++)
             {
-                Console.WriteLine($" {i}. {ingredients[i].Name} : {ingredients[i].IngredientType.ToString()}");
+                Console.WriteLine($" {i}. {ingredients[i].Name} : {ingredients[i].FoodType.ToString()}");
             }
             Console.WriteLine("\r\nIngredient:");
             int choice = int.Parse(Console.ReadLine());
@@ -143,7 +143,7 @@ namespace Cocktails
             Console.WriteLine("\r\nDescription:");
             string decscription = Console.ReadLine();
 
-            cocktail.IngredientDescription.Add(new IngredientDescription(ingredients[choice].Name, decscription));
+            cocktail.IngredientDescription.Add(new Ingredient(ingredients[choice].Name, decscription));
 
             Console.WriteLine("Do you want more ingredients, type 'Y' ");
             ConsoleKeyInfo key = Console.ReadKey();
@@ -159,9 +159,9 @@ namespace Cocktails
             Console.WriteLine("Glass used: " + cocktail.GlassType);
             Console.WriteLine("Ingredients:");
            
-            foreach (IngredientDescription ingredient in cocktail.IngredientDescription)
+            foreach (Ingredient ingredient in cocktail.IngredientDescription)
             {
-                Console.WriteLine("  - " + ingredient.Ingredient + " : " + ingredient.Description);
+                Console.WriteLine("  - " + ingredient.Food + " : " + ingredient.Description);
             }
 
             Console.WriteLine();

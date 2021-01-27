@@ -9,7 +9,7 @@
         PocoGrande,
         Flute,
     }
-    public enum IngredientType
+    public enum FoodType
     {
         Liquid,
         Solid,

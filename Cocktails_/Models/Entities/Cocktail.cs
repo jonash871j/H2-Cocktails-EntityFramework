@@ -12,11 +12,11 @@ namespace Cocktails.Models.Entities
         [Required]
         public GlassType GlassType { get; set; }
         [Required]
-        public List<IngredientDescription> IngredientDescription { get; set; } = new List<IngredientDescription>();
+        public List<Ingredient> IngredientDescription { get; set; } = new List<Ingredient>();
 
         // For some reason entity framework needs a default constructor
         public Cocktail() { }
-        public Cocktail(string name, GlassType glassType, List<IngredientDescription> ingredientDescriptions)
+        public Cocktail(string name, GlassType glassType, List<Ingredient> ingredientDescriptions)
         {
             Name = name;
             GlassType = glassType;

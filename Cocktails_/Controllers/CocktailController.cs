@@ -9,14 +9,14 @@ namespace Cocktails.Controllers
 {
     public class CocktailController : IController<Cocktail, string>
     {
-        private IngredientDescriptionController inDeCon = new IngredientDescriptionController();
+        private IngredientController inDeCon = new IngredientController();
 
         public void Create(Cocktail cocktail)
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 context.Cocktails.Add(cocktail);
-                context.IngredientDescriptions.AddRange(cocktail.IngredientDescription);
+                context.Ingredients.AddRange(cocktail.IngredientDescription);
                 context.SaveChanges();
             }
         }
@@ -33,7 +33,7 @@ namespace Cocktails.Controllers
             using (CocktailDBContext context = new CocktailDBContext())
             {
                 Cocktail cocktail = Get(key);
-                context.IngredientDescriptions.RemoveRange(cocktail.IngredientDescription);
+                context.Ingredients.RemoveRange(cocktail.IngredientDescription);
                 context.Cocktails.Remove(cocktail);
                 context.SaveChanges();
             }
@@ -43,7 +43,7 @@ namespace Cocktails.Controllers
         {
             using (CocktailDBContext context = new CocktailDBContext())
             {
-                context.IngredientDescriptions.RemoveRange(context.IngredientDescriptions);
+                context.Ingredients.RemoveRange(context.Ingredients);
                 context.Cocktails.RemoveRange(context.Cocktails);
                 context.SaveChanges();
             }
